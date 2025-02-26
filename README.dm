@@ -1,10 +1,9 @@
-# OpenCV Project
+OpenCV Project
 
 This project demonstrates various functionalities of OpenCV, a powerful library for computer vision and image processing.
 
-## 📂 File Structure
+📂 File Structure
 
-```
 OpenCV-Project/
 ├── README.md
 ├── requirements.txt
@@ -36,61 +35,67 @@ OpenCV-Project/
 ├── main.py
 ├── utils.py
 ├── config.py
-```
 
-## 📜 Description
+📜 Description
 
 This project contains various scripts that demonstrate the capabilities of OpenCV, a powerful library for computer vision and image processing. The scripts are organized into folders, each containing specific functionality or features of OpenCV.
 
-## 📌 Requirements
+📌 Requirements
 
-- Python 3.x
-- OpenCV 4.x
-- NumPy
+Python 3.x
 
-## 🚀 Installation
+OpenCV 4.x
 
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/yourusername/opencv-project.git
-    ```
-2. Navigate to the project directory:
-    ```bash
-    cd opencv-project
-    ```
-3. Install the required packages:
-    ```bash
-    pip install -r requirements.txt
-    ```
+NumPy
 
-## 🛠 Usage
+🚀 Installation
 
-1. Run the main script:
-    ```bash
-    python main.py
-    ```
-2. Follow the on-screen instructions to interact with the application.
+Clone the repository:
 
-## 📁 Files and Their Usage
+git clone https://github.com/yourusername/opencv-project.git
 
-- `main.py`: The main script to run the application. It initializes the application and handles user interactions.
-- `requirements.txt`: A file containing a list of dependencies required to run the project.
-- `utils.py`: Contains utility functions used across the project for various tasks such as image processing and video analysis.
-- `config.py`: Configuration file that holds various settings and parameters used in the project.
-- `README.md`: Provides an overview of the project, installation instructions, usage, and other relevant information.
-- `LICENSE`: Contains the license information for the project.
+Navigate to the project directory:
 
-## 🎯 Features
+cd opencv-project
 
-- Image processing
-- Object detection
-- Video analysis
+Install the required packages:
 
-## 🤝 Contributing
+pip install -r requirements.txt
+
+🛠 Usage
+
+Run the main script:
+
+python main.py
+
+Follow the on-screen instructions to interact with the application.
+
+📁 Files and Their Usage
+
+main.py: The main script to run the application. It initializes the application and handles user interactions.
+
+requirements.txt: A file containing a list of dependencies required to run the project.
+
+utils.py: Contains utility functions used across the project for various tasks such as image processing and video analysis.
+
+config.py: Configuration file that holds various settings and parameters used in the project.
+
+README.md: Provides an overview of the project, installation instructions, usage, and other relevant information.
+
+LICENSE: Contains the license information for the project.
+
+🎯 Features
+
+Image processing
+
+Object detection
+
+Video analysis
+
+🤝 Contributing
 
 Contributions are welcome! Please fork the repository and create a pull request with your changes.
 
-## 📝 License
+📝 License
 
-This project is licensed under the MIT License - see the `LICENSE` file for details.
-
+This project is licensed under the MIT License - see the LICENSE file for details.
