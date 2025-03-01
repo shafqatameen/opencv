@@ -1,25 +1,32 @@
+#pylint:disable=no-member
+
 import cv2 as cv
 import matplotlib.pyplot as plt
-from pathlib import Path as path
-#arranging the file using pathlib
-image=sorted(path("images").glob('*'))
-print(image)
-#default bgr img
-img=cv.imread(image[3])
-cv.imshow("img->bgr", img)
-#converted into rgb img
-img_rgb=cv.cvtColor(img,cv.COLOR_BGR2RGB)
-cv.imshow("img->rbg", img_rgb)
 
-#Default img rgb using bgr
-plt.imshow(img)
-plt.title("img->bgr")
-plt.show()
-#using defailt img rgb
-plt.imshow(img_rgb)
-plt.title("img->rbg")
-plt.show()
+img = cv.imread('images/park.jpg')
+cv.imshow('Park', img)
+
+# plt.imshow(img)
+# plt.show()
+
+# BGR to Grayscale
+gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+cv.imshow('Gray', gray)
+
+# BGR to HSV
+hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
+cv.imshow('HSV', hsv)
+
+# BGR to L*a*b
+lab = cv.cvtColor(img, cv.COLOR_BGR2LAB)
+cv.imshow('LAB', lab)
+
+# BGR to RGB
+rgb = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+cv.imshow('RGB', rgb)
+
+# HSV to BGR
+lab_bgr = cv.cvtColor(lab, cv.COLOR_LAB2BGR)
+cv.imshow('LAB --> BGR', lab_bgr)
 
 cv.waitKey(0)
-if cv.waitKey(0)& 0xFF ==ord('q'):
-    cv.destroyAllWindows()
