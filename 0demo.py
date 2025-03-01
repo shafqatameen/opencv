@@ -1,32 +1,49 @@
-#pylint:disable=no-member
-
 import cv2 as cv
+import numpy as np
 import matplotlib.pyplot as plt
 
-img = cv.imread('images/park.jpg')
-cv.imshow('Park', img)
+# Read image
+img = cv.imread("images/cat.jpg")  # Replace with your image path
 
-# plt.imshow(img)
-# plt.show()
+# Convert to different color spaces
+hsv= cv.cvtColor(img, cv.COLOR_BGR2HSV)
+lab= cv.cvtColor(img, cv.COLOR_BGR2LAB)
+hls= cv.cvtColor(img, cv.COLOR_BGR2HLS)
+gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)  # Single channel
 
-# BGR to Grayscale
-gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
-cv.imshow('Gray', gray)
+'''# Convert images to RGB for Matplotlib
+img_rgb = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+hsv_rgb = cv.cvtColor(hsv_img, cv.COLOR_HSV2RGB)
+lab_rgb = cv.cvtColor(lab_img, cv.COLOR_LAB2RGB)
+hls_rgb = cv.cvtColor(hls_img, cv.COLOR_HLS2RGB)'''
 
-# BGR to HSV
-hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
-cv.imshow('HSV', hsv)
+# Convert grayscale to 3-channel for display consistency
+gray_img_bgr = cv.cvtColor(gray, cv.COLOR_GRAY2RGB)
 
-# BGR to L*a*b
-lab = cv.cvtColor(img, cv.COLOR_BGR2LAB)
-cv.imshow('LAB', lab)
+# Display each image in a separate Matplotlib window
+plt.figure("Original Image")
+plt.imshow(img)
+plt.title("Original Image")
+plt.axis("off")
 
-# BGR to RGB
-rgb = cv.cvtColor(img, cv.COLOR_BGR2RGB)
-cv.imshow('RGB', rgb)
+plt.figure("Grayscale Image")
+plt.imshow(gray)
+plt.title("Grayscale Image")
+plt.axis("off")
 
-# HSV to BGR
-lab_bgr = cv.cvtColor(lab, cv.COLOR_LAB2BGR)
-cv.imshow('LAB --> BGR', lab_bgr)
+plt.figure("HSV Image")
+plt.imshow(hsv)
+plt.title("HSV Image")
+plt.axis("off")
 
-cv.waitKey(0)
+plt.figure("LAB Image")
+plt.imshow(lab)
+plt.title("LAB Image")
+plt.axis("off")
+
+plt.figure("HLS Image")
+plt.imshow(hls)
+plt.title("HLS Image")
+plt.axis("off")
+
+plt.show()
