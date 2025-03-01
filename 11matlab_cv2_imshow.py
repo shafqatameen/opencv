@@ -1,25 +1,38 @@
 import cv2 as cv
 import matplotlib.pyplot as plt
 from pathlib import Path as path
+import numpy as np
+
 #arranging the file using pathlib
 image=sorted(path("images").glob('*'))
 print(image)
 #default bgr img
 img=cv.imread(image[3])
-cv.imshow("img->bgr", img)
+#cv.imshow("img->bgr", img)
 #converted into rgb img
 img_rgb=cv.cvtColor(img,cv.COLOR_BGR2RGB)
-cv.imshow("img->rbg", img_rgb)
+#cv.imshow("img->rbg", img_rgb)
 
-#Default img rgb using bgr
+new_img=np.hstack((img_rgb,img))
+cv.imshow("stack of img: img_rgb,img", new_img)
+
+
+'''#Default img rgb using bgr
 plt.imshow(img)
 plt.title("img->bgr")
 plt.show()
 #using defailt img rgb
 plt.imshow(img_rgb)
 plt.title("img->rbg")
+plt.show()'''
+
+#using hstack
+cmbined_img=np.hstack((img_rgb,img))
+plt.imshow(cmbined_img)
+plt.title("stack of img : img_rgb,img")
 plt.show()
 
 cv.waitKey(0)
 if cv.waitKey(0)& 0xFF ==ord('q'):
     cv.destroyAllWindows()
+
