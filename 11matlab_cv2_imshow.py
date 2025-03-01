@@ -32,6 +32,18 @@ plt.imshow(cmbined_img)
 plt.title("stack of img : img_rgb,img")
 plt.show()
 
+#ushing stack display hsv, gray,lab,hls
+hsv_img=cv.cvtColor(img,cv.COLOR_BGR2HSV)
+lab_img=cv.cvtColor(img,cv.COLOR_BGR2LAB)
+hls_img=cv.cvtColor(img,cv.COLOR_BGR2HLS)
+stack_img=np.hstack((hsv_img,lab_img,hls_img))
+cv.imshow("stack of imgs(cv)", stack_img)
+
+
+'''plt.show(stack_img)               #need image in rgb only(plt )
+plt.title("stack of imgs(plt)")
+plt.show()'''
+
 cv.waitKey(0)
 if cv.waitKey(0)& 0xFF ==ord('q'):
     cv.destroyAllWindows()
