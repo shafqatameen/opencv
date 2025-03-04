@@ -1,4 +1,4 @@
 opencv-python
 numpy
-matplotlib.pyplot
-from pathlib import Path 
+matplotlib
+
