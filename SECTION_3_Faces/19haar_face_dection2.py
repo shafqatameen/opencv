@@ -14,7 +14,7 @@ cv.imshow("gray",gray_img)
 haar_cascade=cv.CascadeClassifier("SECTION_3_Faces/haar_face.xml")
 
 #faces_rect=haar_cascade.detectMultiScale(gray_img,scaleFactor=1.1,minNeighbors=4)
-faces_rect=haar_cascade.detectMultiScale(gray_img,1.1,1)
+faces_rect=haar_cascade.detectMultiScale(gray_img,5.5,1)
 #dectect the face
 for x,y,w,h in faces_rect:
     cv.rectangle(img,(x,y),(x+w,y+h),(0,255,0),3)
