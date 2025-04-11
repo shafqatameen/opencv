@@ -1,0 +1,107 @@
+from pathlib import Path
+import glob
+import os
+import caer
+import canaro
+import numpy as np
+import cv2 as cv
+import gc
+import matplotlib.pyplot as plt
+from tensorflow.keras.utils import to_categorical
+from tensorflow.keras.callbacks import LearningRateScheduler
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Flatten, Dropout, Conv2D, MaxPooling2D
+from tensorflow.keras.optimizers.legacy import SGD
+
+IMG_SIZE = (80, 80)
+channels = 1
+char_path = Path('SECTION_4_deep_CV/archive/simpsons_dataset')
+
+# Creating a character dictionary using pathlib and glob
+char_dict = {}
+for char_dir in char_path.iterdir():
+    if char_dir.is_dir():
+        file_count = len(list(char_dir.glob('*')))
+        char_dict[char_dir.name] = file_count
+
+# Sort dictionary in descending order
+char_dict = caer.sort_dict(char_dict, descending=True)
+print("[INFO] Top Characters and their counts:", char_dict)
+
+# Get the first 10 categories
+characters = [item[0] for item in char_dict[:10]]
+print("[INFO] Selected characters:", characters)
+
+# Preprocess data
+train = caer.preprocess_from_dir(str(char_path), characters, channels=channels, IMG_SIZE=IMG_SIZE, isShuffle=True)
+print("[INFO] Training samples:", len(train))
+
+# Visualizing one image
+plt.figure(figsize=(5, 5))
+plt.imshow(train[0][0], cmap='gray')
+plt.show()
+
+# Separating features and labels
+featureSet, labels = caer.sep_train(train, IMG_SIZE=IMG_SIZE)
+featureSet = caer.normalize(featureSet)
+labels = to_categorical(labels, len(characters))
+
+# Splitting data
+x_train, x_val, y_train, y_val = caer.train_val_split(featureSet, labels, val_ratio=0.2)
+
+# Cleanup
+del train, featureSet, labels
+gc.collect()
+
+# Training parameters
+BATCH_SIZE = 32
+EPOCHS = 10
+
+# Data generator
+datagen = canaro.generators.imageDataGenerator()
+train_gen = datagen.flow(x_train, y_train, batch_size=BATCH_SIZE)
+
+# Model setup
+w, h = IMG_SIZE[:2]
+output_dim = 10
+
+model = Sequential([
+    Conv2D(32, (3, 3), activation='relu', padding='same', input_shape=(w, h, channels)),
+    Conv2D(32, (3, 3), activation='relu'),
+    MaxPooling2D(pool_size=(2, 2)),
+    Dropout(0.2),
+
+    Conv2D(64, (3, 3), padding='same', activation='relu'),
+    Conv2D(64, (3, 3), activation='relu'),
+    MaxPooling2D(pool_size=(2, 2)),
+    Dropout(0.2),
+
+    Conv2D(256, (3, 3), padding='same', activation='relu'),
+    Conv2D(256, (3, 3), activation='relu'),
+    MaxPooling2D(pool_size=(2, 2)),
+    Dropout(0.2),
+
+    Flatten(),
+    Dropout(0.5),
+    Dense(1024, activation='relu'),
+    Dense(output_dim, activation='softmax')
+])
+
+model.summary()
+
+# Compile and train model
+optimizer = SGD(learning_rate=0.001, decay=1e-7, momentum=0.9, nesterov=True)
+model.compile(loss='binary_crossentropy', optimizer=optimizer, metrics=['accuracy'])
+
+callbacks_list = [LearningRateScheduler(canaro.lr_schedule)]
+
+training = model.fit(
+    train_gen,
+    steps_per_epoch=len(x_train) // BATCH_SIZE,
+    epochs=EPOCHS,
+    validation_data=(x_val, y_val),
+    validation_steps=len(y_val) // BATCH_SIZE,
+    callbacks=callbacks_list
+)
+
+print("[INFO] Characters used:", characters)
